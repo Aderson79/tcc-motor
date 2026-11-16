@@ -108,7 +108,6 @@ def _gemini():
 
 
 def gemini(prompt: str, model: str, purpose: str, **meta) -> Call:
-    import httpx
     from google.genai import errors
 
     def once() -> Call:
@@ -125,7 +124,9 @@ def gemini(prompt: str, model: str, purpose: str, **meta) -> Call:
     def is_transport(exc: Exception) -> bool:
         if isinstance(exc, errors.APIError):
             return exc.code == 429 or (exc.code or 0) >= 500
-        return isinstance(exc, (httpx.TransportError, ConnectionError, TimeoutError))
+        # erros de rede de qualquer cliente HTTP (conexão, timeout, protocolo)
+        names = {c.__name__ for c in type(exc).__mro__}
+        return isinstance(exc, OSError) or bool(names & {"TransportError", "RequestError", "ClientError"} - {"APIError"})
 
     return _with_retry("gemini", purpose, meta, model, once, is_transport)
 
