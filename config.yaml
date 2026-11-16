@@ -37,6 +37,7 @@ noise:
 
 relato:
   model: "gemini-3.8-flash"
+  max_tokens: null           # Gemini em configuração padrão, sem limite de saída
   max_filter_attempts: 3
   concurrency: 4
 
@@ -54,6 +55,7 @@ rerank:
 # Sem temperatura nem outro parâmetro de amostragem; sem cache de prompt; sem Batch API.
 # No claude-sonnet-5, omitir `thinking` ATIVA o raciocínio adaptativo. Como o protocolo
 # manda não ativar raciocínio estendido, as chamadas enviam thinking={"type":"disabled"}.
+# O Gemini (relatos) roda em configuração padrão, sem orçamento de raciocínio definido.
 anthropic:
   thinking: "disabled"
 
@@ -67,9 +69,9 @@ stats:
   alpha_bonferroni: 0.0125
   min_mean_diff: 0.05
 
-models_access_date: null     # preenchido no travamento
+models_access_date: "2026-11-16"
 
-# Preços em USD por 1 milhão de tokens. CONFIRMAR nas páginas oficiais antes do lock-v1.
+# Preços em USD por 1 milhão de tokens, conferidos nas páginas oficiais em 16/11/2026.
 prices:
   claude-sonnet-5:
     input: 2.00
@@ -77,7 +79,7 @@ prices:
     date: "2026-11-16"
     url: "https://platform.claude.com/docs/en/about-claude/pricing"
   gemini-3.8-flash:
-    input: null
-    output: null             # tokens de raciocínio são cobrados como saída
-    date: null
+    input: 0.75              # nível pago Standard, vigente até 31/12/2026
+    output: 3.75             # tokens de raciocínio são cobrados como saída
+    date: "2026-11-16"
     url: "https://ai.google.dev/gemini-api/docs/pricing"

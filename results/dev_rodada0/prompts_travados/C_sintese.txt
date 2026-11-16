@@ -1,0 +1,16 @@
+You will receive a person's vocational interest scores on the six RIASEC dimensions
+(scale from 1 to 7) and a short self-description written by the person.
+
+Write one paragraph in English, of 80 to 120 words, describing this person's interests:
+the kinds of activities they prefer, the problems they like to work on, and the work
+settings in which they would feel comfortable. Combine the scores and the
+self-description into a single coherent description. Do not mention any occupation
+title or job title, and do not mention the RIASEC letters or the scores themselves.
+Output only the paragraph.
+
+RIASEC scores:
+Realistic: {R}   Investigative: {I}   Artistic: {A}
+Social: {S}   Enterprising: {E}   Conventional: {C}
+
+Self-description:
+{self_description}

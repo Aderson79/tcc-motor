@@ -63,7 +63,7 @@ def _ensure_relato(set_name: str, pid: str, code: str) -> bool:
         rejected = sum(1 for a in read_jsonl(ATTEMPTS) if a["profile_id"] == pid and a["code"] == code)
     while rejected < cfg["max_filter_attempts"]:
         attempt = rejected + 1
-        call = llm.gemini(relato_prompt(cat.tasks[code]), cfg["model"], "relato",
+        call = llm.call(relato_prompt(cat.tasks[code]), cfg["model"], cfg["max_tokens"], "relato",
                           set=set_name, profile_id=pid, code=code, attempt=attempt)
         text = call.text.strip()
         matched = title_filter(title, text)

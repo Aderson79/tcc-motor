@@ -14,4 +14,4 @@ def synthesis_prompt(scores: list[float], relato: str) -> str:
 
 def synthesize(scores: list[float], relato: str, **meta) -> llm.Call:
     cfg = config()["synthesis"]
-    return llm.claude(synthesis_prompt(scores, relato), cfg["model"], cfg["max_tokens"], "sintese", **meta)
+    return llm.call(synthesis_prompt(scores, relato), cfg["model"], cfg["max_tokens"], "sintese", **meta)

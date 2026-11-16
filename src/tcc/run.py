@@ -83,6 +83,7 @@ def run(set_name: str) -> None:
             record = {"profile_id": pid, "condition": cond, "sintese": call.text.strip(),
                       "n_words": len(call.text.split()), "latency_s": call.latency_s,
                       "input_tokens": call.input_tokens, "output_tokens": call.output_tokens,
+                      "thinking_tokens": call.thinking_tokens,
                       "model_returned": call.model_returned, "stop_reason": call.stop_reason}
             with _lock:
                 append_jsonl(synth_path, record)

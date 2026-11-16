@@ -27,7 +27,7 @@ def rerank(profile_text: str, candidates: list[tuple[str, str]], candidate_codes
     text = rerank_prompt(profile_text, candidates)
     calls, picks = [], None
     for send in (1, 2):
-        call = llm.claude(text, cfg["model"], cfg["max_tokens"], "reordenacao", send=send, **meta)
+        call = llm.call(text, cfg["model"], cfg["max_tokens"], "reordenacao", send=send, **meta)
         calls.append(call)
         picks = parse(call.text, len(candidates))
         if picks:
@@ -39,5 +39,6 @@ def rerank(profile_text: str, candidates: list[tuple[str, str]], candidate_codes
         "latency_s": sum(c.latency_s for c in calls),
         "input_tokens": sum(c.input_tokens for c in calls),
         "output_tokens": sum(c.output_tokens for c in calls),
+        "thinking_tokens": sum(c.thinking_tokens for c in calls),
         "model_returned": calls[-1].model_returned,
     }

@@ -1,0 +1,15 @@
+You are helping build an evaluation set for an occupation recommender. Write a short
+self-description, in the first person, of a person who would enjoy the work activities
+listed below, as if this person were telling a career counselor what they like to do.
+
+Rules:
+1. Write 3 to 5 sentences in plain, everyday English.
+2. Describe what the person likes to do, not a job: do not mention any occupation title,
+   job title, profession, industry, or employer.
+3. Do not reuse technical terms from the activity list; describe the activities in
+   ordinary words.
+4. Do not mention education, degrees, certifications, salary, or years of experience.
+5. Output only the self-description, with no title or explanation.
+
+Work activities:
+{task_statements}

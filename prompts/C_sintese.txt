@@ -6,7 +6,8 @@ the kinds of activities they prefer, the problems they like to work on, and the 
 settings in which they would feel comfortable. Combine the scores and the
 self-description into a single coherent description. Do not mention any occupation
 title or job title, and do not mention the RIASEC letters or the scores themselves.
-Output only the paragraph.
+Output only the paragraph. Stay strictly within the word range: aim for about 100 words
+and never exceed 120 words.
 
 RIASEC scores:
 Realistic: {R}   Investigative: {I}   Artistic: {A}

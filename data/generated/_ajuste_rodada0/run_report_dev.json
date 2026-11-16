@@ -1,0 +1,10 @@
+{
+  "b2_zero_variance_occupations": 0,
+  "dev": {
+    "va_texts_over_limit": 0,
+    "vb_texts_over_limit": 0,
+    "vc_runs": 300,
+    "vc_fallbacks": 20,
+    "vc_resends": 22
+  }
+}

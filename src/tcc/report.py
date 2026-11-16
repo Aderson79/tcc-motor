@@ -42,7 +42,14 @@ def machine() -> str:
         cpu = next(l.split(":", 1)[1].strip() for l in open("/proc/cpuinfo") if l.startswith("model name"))
         ram = int(next(l.split()[1] for l in open("/proc/meminfo") if l.startswith("MemTotal"))) / 1e6
     except Exception:
-        ram = float("nan")
+        try:  # Windows: no /proc
+            wmi = subprocess.run(["powershell", "-NoProfile", "-Command",
+                                  "(Get-CimInstance Win32_Processor).Name; "
+                                  "(Get-CimInstance Win32_ComputerSystem).TotalPhysicalMemory"],
+                                 capture_output=True, text=True).stdout.split("\n")
+            cpu, ram = wmi[0].strip(), int(wmi[1]) / 1e9
+        except Exception:
+            ram = float("nan")
     device = json.loads((GEN / "embed_report.json").read_text())["device"]
     return (f"{cpu}, {os.cpu_count()} núcleos, {ram:.0f} GB RAM, {gpu}; {platform.platform()}; "
             f"Python {platform.python_version()}; embedding em {device}")
@@ -84,10 +91,11 @@ def timing_cost(set_name: str) -> tuple[pd.DataFrame, float]:
     for cond in SET_CONDITIONS[set_name]:
         synth = pd.DataFrame(read_jsonl(GEN / f"sinteses_{cond}.jsonl"))
         runs = pd.DataFrame(read_jsonl(GEN / f"vc_runs_{cond}.jsonl"))
-        synth["cost"] = [llm.cost(cfg["synthesis"]["model"], i, o)
-                         for i, o in zip(synth["input_tokens"], synth["output_tokens"])]
-        runs["cost"] = [llm.cost(cfg["rerank"]["model"], i, o)
-                        for i, o in zip(runs["input_tokens"], runs["output_tokens"])]
+        # thinking tokens are billed as output
+        synth["cost"] = [llm.cost(cfg["synthesis"]["model"], i, o + t) for i, o, t in
+                         zip(synth["input_tokens"], synth["output_tokens"], synth["thinking_tokens"])]
+        runs["cost"] = [llm.cost(cfg["rerank"]["model"], i, o + t) for i, o, t in
+                        zip(runs["input_tokens"], runs["output_tokens"], runs["thinking_tokens"])]
         total += synth["cost"].sum() + runs["cost"].sum()
         vc_cost = synth.set_index("profile_id")["cost"] + runs.groupby("profile_id")["cost"].mean()
         costs = {"B1": 0.0, "B2": 0.0, "V-A": 0.0, "V-B": synth["cost"].mean(), "V-C": vc_cost.mean()}
@@ -98,7 +106,7 @@ def timing_cost(set_name: str) -> tuple[pd.DataFrame, float]:
     return pd.DataFrame(rows), total
 
 
-def gemini_cost(set_name: str) -> float:
+def relato_cost(set_name: str) -> float:
     model = config()["relato"]["model"]
     calls = [c for c in read_jsonl(LOGS / "calls.jsonl")
              if c["purpose"] == "relato" and c.get("set") == set_name and not c["error"]]
@@ -133,7 +141,7 @@ def build(set_name: str) -> None:
     variation = vc_variation(per_run, set_name)
     tc, motor_total = timing_cost(set_name)
     tc.to_csv(out / "timing_cost.csv", index=False)
-    build_cost = gemini_cost(set_name)
+    build_cost = relato_cost(set_name)
 
     embed_report = json.loads((GEN / "embed_report.json").read_text())
     run_report = json.loads((GEN / f"run_report_{set_name}.json").read_text())
@@ -163,8 +171,8 @@ def build(set_name: str) -> None:
     redistribution = GEN / "sample_eval_redistribution.json"
     redis = json.loads(redistribution.read_text()) if set_name == "eval" and redistribution.exists() else None
     synths = {c: pd.DataFrame(read_jsonl(GEN / f"sinteses_{c}.jsonl")) for c in conds}
-    sonnet_models = sorted({m for c in conds for m in synths[c]["model_returned"]} | set(runs_all["model_returned"]))
-    gem_models = sorted({c["model_returned"] for c in read_jsonl(LOGS / "calls.jsonl")
+    engine_models = sorted({m for c in conds for m in synths[c]["model_returned"]} | set(runs_all["model_returned"]))
+    relato_models = sorted({c["model_returned"] for c in read_jsonl(LOGS / "calls.jsonl")
                          if c["purpose"] == "relato" and not c["error"]})
     price = cfg["prices"]
     ps, pg = price[cfg["synthesis"]["model"]], price[cfg["relato"]["model"]]
@@ -176,12 +184,12 @@ def build(set_name: str) -> None:
           f"{git('rev-parse', '--verify', '-q', 'lock-v1^{commit}')} · commit results-v1: o commit apontado pela tag "
           f"`results-v1` (`git rev-parse results-v1`; pai: {git('rev-parse', 'HEAD')})",
           f"- Data de execução: {pd.Timestamp.now().date()}",
-          f"- Modelos (ID devolvido pela API e data de acesso): Sonnet: {', '.join(sonnet_models)} · "
-          f"Gemini: {', '.join(gem_models)} · acesso em {cfg['models_access_date']}",
+          f"- Modelos (ID devolvido pela API e data de acesso): síntese e reordenação: "
+          f"{', '.join(engine_models)} · relatos: {', '.join(relato_models)} · acesso em {cfg['models_access_date']}",
           f"- Embedding: all-mpnet-base-v2, revisão {cfg['embedding']['revision']}, "
           f"sentence-transformers {cfg['embedding']['sentence_transformers_version']}",
-          f"- Preços usados (USD/1M tokens, entrada/saída, data, URL): Sonnet {ps['input']}/{ps['output']}, "
-          f"{ps['date']}, {ps['url']} · Gemini {pg['input']}/{pg['output']}, {pg['date']}, {pg['url']}",
+          f"- Preços usados (USD/1M tokens, entrada/saída, data, URL): {cfg['synthesis']['model']} "
+          f"{ps['input']}/{ps['output']}, {ps['date']}, {ps['url']} · {cfg['relato']['model']} {pg['input']}/{pg['output']}, {pg['date']}, {pg['url']}",
           f"- O*NET: {cfg['onet']['version']}, download em {cfg['onet']['download_date']}, SHA-256 {cfg['onet']['zip_sha256']}",
           f"- Máquina: {machine()}", ""]
     s = cat.summary
@@ -243,7 +251,7 @@ def build(set_name: str) -> None:
     for _, r in tc[tc["condition"] == main].iterrows():
         L.append(f"| {r['system']} | {r['tempo_media_s']:.4f} | {r['tempo_mediana_s']:.4f} | {r['tempo_p95_s']:.4f} | "
                  f"{r['custo_medio_consulta_usd']:.5f} |")
-    L += [f"- Custo total do motor no experimento: {motor_total:.2f} USD · custo de construção do conjunto (Gemini): "
+    L += [f"- Custo total do motor no experimento: {motor_total:.2f} USD · custo de construção do conjunto (relatos): "
           f"{build_cost:.2f} USD",
           "- Tempo e custo usam 4 e 5 casas decimais porque B1/B2 e o custo por consulta ficariam zerados com 3. "
           "A condição de sensibilidade está em timing_cost.csv.", ""]

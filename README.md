@@ -5,8 +5,11 @@ interesses RIASEC: avaliação comparativa com perfis sintéticos sobre o catál
 Mesquita, iCEV). Repositório independente; produz o pacote de resultados em `results/`.
 
 ## Estado atual
-Pronto até o ponto em que faltam só as chaves de API: catálogo (923 ocupações), índice pgvector, sorteio do
-conjunto de desenvolvimento e os 16 testes obrigatórios estão feitos. Nenhuma chamada a LLM foi feita ainda.
+Conjunto de desenvolvimento executado e ajustado (uma rodada, ver `AJUSTES.md`); configuração travada na tag
+`lock-v1`. O registro cronológico de tudo o que foi feito está em `DIARIO.md` e os desvios em `DESVIOS.md`.
+
+No Windows não há `make`: rode os comandos `python -m tcc.<etapa>` da tabela abaixo, na ordem do `Makefile`.
+Sem Docker, o PostgreSQL 16 com pgvector pode ser instalado do conda-forge (ver `DESVIOS.md`, D2).
 
 ## Como reproduzir
 1. `make setup` — Python 3.11+ e dependências.
@@ -29,7 +32,7 @@ conjunto de desenvolvimento e os 16 testes obrigatórios estão feitos. Nenhuma 
 | `python -m tcc.catalog` | filtro de elegibilidade, `results/catalog_summary.csv` |
 | `python -m tcc.embed` | divisão em trechos, embeddings, carga no pgvector |
 | `python -m tcc.sampling dev\|eval` | sorteio estratificado |
-| `python -m tcc.profiles dev\|eval` | relatos (Gemini), filtro de título, substituições, notas com ruído |
+| `python -m tcc.profiles dev\|eval` | relatos (LLM), filtro de título, substituições, notas com ruído |
 | `python -m tcc.gold dev\|eval` | gabarito |
 | `python -m tcc.run dev\|eval` | B1, B2, V-A, V-B, V-C; `rankings*.csv`, `timings*.csv` |
 | `python -m tcc.report dev\|eval` | métricas, Wilcoxon, tempo, custo, `RESULTADOS*.md` |

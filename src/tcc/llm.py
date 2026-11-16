@@ -104,16 +104,24 @@ def claude(prompt: str, model: str, max_tokens: int, purpose: str, **meta) -> Ca
 @lru_cache(maxsize=1)
 def _gemini():
     from google import genai
-    return genai.Client(api_key=_key("GEMINI_API_KEY"))
+    from google.genai import types
+    # Sem timeout o SDK fica preso num 503 lento; as novas tentativas são feitas (e registradas) aqui.
+    return genai.Client(api_key=_key("GEMINI_API_KEY"), http_options=types.HttpOptions(
+        timeout=60_000, retry_options=types.HttpRetryOptions(attempts=1)))
 
 
 def gemini(prompt: str, model: str, purpose: str, **meta) -> Call:
     from google.genai import errors
 
+    # lru_cache não trava: sem o lock, threads simultâneas criam clientes duplicados e o
+    # descarte de cada duplicata fecha a conexão ("client has been closed").
+    with _lock:
+        client = _gemini()
+
     def once() -> Call:
         start = time.perf_counter()
         # Configuração padrão: sem temperatura, sem amostragem, sem orçamento de raciocínio.
-        resp = _gemini().models.generate_content(model=model, contents=prompt)
+        resp = client.models.generate_content(model=model, contents=prompt)
         latency = time.perf_counter() - start
         usage = resp.usage_metadata
         finish = resp.candidates[0].finish_reason if resp.candidates else None
@@ -129,6 +137,14 @@ def gemini(prompt: str, model: str, purpose: str, **meta) -> Call:
         return isinstance(exc, OSError) or bool(names & {"TransportError", "RequestError", "ClientError"} - {"APIError"})
 
     return _with_retry("gemini", purpose, meta, model, once, is_transport)
+
+
+def call(prompt: str, model: str, max_tokens: int | None, purpose: str, **meta) -> Call:
+    """Dispatch by provider. max_tokens only applies to Claude: Gemini runs with its default
+    configuration (its thinking tokens count against any output limit)."""
+    if model.startswith("claude"):
+        return claude(prompt, model, max_tokens, purpose, **meta)
+    return gemini(prompt, model, purpose, **meta)
 
 
 def cost(model: str, input_tokens: float, output_tokens: float) -> float:

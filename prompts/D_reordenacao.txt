@@ -5,7 +5,8 @@ Select the 5 occupations that best match this person's interests and rank them f
 best to worst match. Consider only the fit between the person's interests and the
 work described; do not consider salary, job demand, or education requirements.
 Answer only with the 5 candidate numbers, in order, separated by commas
-(for example: 7, 2, 15, 1, 9).
+(for example: 7, 2, 15, 1, 9). Your entire response must be that single line of five
+numbers: do not write any explanation, reasoning, or other text before or after it.
 
 Person's interests:
 {profile_text}
