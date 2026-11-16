@@ -1,0 +1,16 @@
+Below is a description of a person's interests and a numbered list of 20 candidate
+occupations, each with its title and description.
+
+Select the 5 occupations that best match this person's interests and rank them from
+best to worst match. Consider only the fit between the person's interests and the
+work described; do not consider salary, job demand, or education requirements.
+Answer only with the 5 candidate numbers, in order, separated by commas
+(for example: 7, 2, 15, 1, 9).
+
+Person's interests:
+{profile_text}
+
+Candidates:
+1. {title_1}: {description_1}
+...
+20. {title_20}: {description_20}

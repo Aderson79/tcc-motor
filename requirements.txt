@@ -1,0 +1,13 @@
+pandas
+numpy
+scipy
+sentence-transformers
+rank-bm25
+scikit-learn
+psycopg[binary]
+pgvector
+anthropic
+google-genai
+pyyaml
+python-dotenv
+pytest

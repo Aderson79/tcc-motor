@@ -1,0 +1,6 @@
+Interest profile, from strongest to weakest:
+{type_1} interests: {level_1}; {type_2} interests: {level_2};
+{type_3} interests: {level_3}; {type_4} interests: {level_4};
+{type_5} interests: {level_5}; {type_6} interests: {level_6}.
+
+Self-description: {self_description}

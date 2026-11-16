@@ -1,0 +1,83 @@
+# Todos os parâmetros do experimento. Depois da tag lock-v1 este arquivo não muda.
+onet:
+  version: "31.0"
+  zip_url: "https://www.onetcenter.org/dl_files/database/db_31_0_csv.zip"
+  download_date: "2026-11-16"
+  zip_sha256: "55033fc68b4c13ec23e7f74dc6378660f6e854e75d55d6e333ae0a761d3987cd"
+  dir: "data/raw/db_31_0_csv"
+
+embedding:
+  model: "sentence-transformers/all-mpnet-base-v2"
+  revision: "e8c3b32edf5434bc2275fc9bab85f82640a19130"
+  sentence_transformers_version: "6.3.0"
+  dim: 768
+  max_seq_length: 384
+
+database:
+  dsn: "postgresql://tcc:tcc@localhost:54329/tcc"
+
+sampling:
+  dev_per_type: 5
+  eval_per_type: 33
+  seed_dev: 20261116
+  seed_eval: 20261117
+  seed_replacement: 20261118
+  seed_examples: 20261122
+  # Regra de falta (Seção 6.3): o déficit de um tipo é sorteado de modo uniforme
+  # entre as ocupações elegíveis restantes dos demais tipos (logo, proporcional ao
+  # tamanho de cada tipo), com seed_eval.
+  shortage_rule: "uniform_over_remaining_occupations_of_other_types"
+
+noise:
+  conditions:
+    dev:  {sigma: 1.0, seed: 20261119}
+    main: {sigma: 1.0, seed: 20261120}   # condição principal
+    sens: {sigma: 0.5, seed: 20261121}   # sensibilidade
+  clip: [1.0, 7.0]
+
+relato:
+  model: "gemini-3.8-flash"
+  max_filter_attempts: 3
+  concurrency: 4
+
+synthesis:
+  model: "claude-sonnet-5"
+  max_tokens: 400
+
+rerank:
+  model: "claude-sonnet-5"
+  max_tokens: 50
+  runs: 10
+  n_candidates: 20
+  concurrency: 4
+
+# Sem temperatura nem outro parâmetro de amostragem; sem cache de prompt; sem Batch API.
+# No claude-sonnet-5, omitir `thinking` ATIVA o raciocínio adaptativo. Como o protocolo
+# manda não ativar raciocínio estendido, as chamadas enviam thinking={"type":"disabled"}.
+anthropic:
+  thinking: "disabled"
+
+retrieval:
+  k: 5
+bm25: {k1: 1.2, b: 0.75}
+
+transport_retry: {max_attempts: 8, base_delay_s: 2.0, max_delay_s: 60.0}
+
+stats:
+  alpha_bonferroni: 0.0125
+  min_mean_diff: 0.05
+
+models_access_date: null     # preenchido no travamento
+
+# Preços em USD por 1 milhão de tokens. CONFIRMAR nas páginas oficiais antes do lock-v1.
+prices:
+  claude-sonnet-5:
+    input: 2.00
+    output: 10.00
+    date: "2026-11-16"
+    url: "https://platform.claude.com/docs/en/about-claude/pricing"
+  gemini-3.8-flash:
+    input: null
+    output: null             # tokens de raciocínio são cobrados como saída
+    date: null
+    url: "https://ai.google.dev/gemini-api/docs/pricing"

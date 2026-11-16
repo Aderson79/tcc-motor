@@ -1,0 +1,9 @@
+{
+  "occupations": 923,
+  "occupations_split": 489,
+  "occupations_split_pct": 52.979,
+  "chunks_mean": 1.5417118093174431,
+  "chunks_max": 3,
+  "statements_over_limit": 0,
+  "device": "cpu"
+}
