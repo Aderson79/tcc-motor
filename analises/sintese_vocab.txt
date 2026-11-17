@@ -1,0 +1,7 @@
+perfis: 198 relatos eval: 198 sinteses: 198
+sobrevivência média (tipos do relato presentes na síntese): 0.1980  mediana 0.1856
+pares: 19503
+Jaccard médio entre perfis diferentes: relatos 0.0662  sínteses 0.1343  razão 2.03
+palavras de conteúdo por texto (média): relatos 51.51  sínteses 74.15
+vocabulário distinto total: relatos 2258  sínteses 1830
+palavras de conteúdo distintas por texto (média): relatos 50.01  sínteses 71.60

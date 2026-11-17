@@ -161,3 +161,25 @@ Horários no fuso de Brasília (UTC−3).
   mesmo antes e depois da reescrita:
   - `git rev-parse lock-v1^{tree}` → `76e6c2f1173533c9f8fd54d5cc8541d76974c4e5`;
   - `git rev-parse results-v1^{tree}` → `aeca458cfb81432bd4585967d5fa35477b57284c`.
+
+## Análises descritivas depois de results-v1
+
+Análises feitas depois do pacote de resultados, **não previstas no protocolo**. São apenas descritivas: leem
+arquivos já gerados, não chamam nenhum modelo e **não alteram dados nem resultados**. Não entram nas
+comparações inferenciais nem no `RESULTADOS.md`.
+
+### Mudança de vocabulário entre relato e síntese (16/11/2026)
+- **Script:** `analises/sintese_vocab.py`; saída em `analises/sintese_vocab.txt`. Comando:
+  `python analises/sintese_vocab.py data/generated`.
+- **O que lê:** os 198 relatos da avaliação (`relatos.jsonl`) e as 198 sínteses de V-B da condição principal
+  (`sinteses_main.jsonl`, σ = 1,0).
+- **Tratamento das palavras:** o mesmo de `content_words` em `src/tcc/common.py` (tokens alfabéticos em
+  minúsculas, com 3 ou mais letras, sem stopwords), sem a normalização do "s" final.
+- **Resultado:**
+  - sobrevivência (fração dos tipos de palavra do relato que aparecem na síntese do mesmo perfil): média
+    0,1980, mediana 0,1856;
+  - Jaccard médio entre textos de perfis diferentes (19.503 pares): relatos 0,0662, sínteses 0,1343
+    (razão 2,03);
+  - palavras de conteúdo por texto (média): relatos 51,51, sínteses 74,15;
+  - palavras de conteúdo distintas por texto (média): relatos 50,01, sínteses 71,60;
+  - vocabulário distinto total: relatos 2.258, sínteses 1.830.
