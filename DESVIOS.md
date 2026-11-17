@@ -39,6 +39,17 @@
   `data/generated/_troca_desfeita/` e **não é usado**; o conjunto de desenvolvimento foi refeito do zero,
   a partir do mesmo sorteio (`sample_dev.csv`). O `logs/calls.jsonl` mantém todas as chamadas.
 
+## D4 — Correção no relatório depois do `lock-v1` (16/11/2026)
+- **Fato:** `logs/calls.jsonl` guarda também as 42 chamadas de relato feitas ao `claude-sonnet-5` durante a
+  troca desfeita (D3). O `src/tcc/report.py` travado lia todas as chamadas de relato do log, de modo que
+  (a) a linha "Modelos" do `RESULTADOS.md` listaria o Sonnet como modelo dos relatos e (b) o custo de
+  construção do conjunto de desenvolvimento somaria essas chamadas ao preço do Gemini.
+- **Correção:** o relatório passa a considerar só as chamadas de relato feitas ao modelo de relatos do
+  `config.yaml`. Duas condições acrescentadas em `report.py`; nada mais mudou.
+- **Hash antes:** `e2d8076` (`lock-v1`). **Hash depois:** o do commit `results-v1`.
+- **Efeito:** nenhum sobre relatos, sínteses, listas, métricas, testes ou tempos. Corrige só a identificação
+  do modelo e o custo de construção informados no relatório. Feita antes de o pacote ser gerado.
+
 ## Notas de interpretação (não alteram o protocolo; registradas por transparência)
 - **Raciocínio do Sonnet:** no `claude-sonnet-5`, omitir o parâmetro `thinking` ativa o raciocínio adaptativo
   por padrão; as chamadas enviam `thinking={"type": "disabled"}`.

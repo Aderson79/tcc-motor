@@ -109,7 +109,8 @@ def timing_cost(set_name: str) -> tuple[pd.DataFrame, float]:
 def relato_cost(set_name: str) -> float:
     model = config()["relato"]["model"]
     calls = [c for c in read_jsonl(LOGS / "calls.jsonl")
-             if c["purpose"] == "relato" and c.get("set") == set_name and not c["error"]]
+             if c["purpose"] == "relato" and c.get("set") == set_name and not c["error"]
+             and c["model_requested"] == model]  # ignora os relatos da troca desfeita (DESVIOS D3)
     return sum(llm.cost(model, c["input_tokens"], c["output_tokens"] + c["thinking_tokens"]) for c in calls)
 
 
@@ -173,7 +174,8 @@ def build(set_name: str) -> None:
     synths = {c: pd.DataFrame(read_jsonl(GEN / f"sinteses_{c}.jsonl")) for c in conds}
     engine_models = sorted({m for c in conds for m in synths[c]["model_returned"]} | set(runs_all["model_returned"]))
     relato_models = sorted({c["model_returned"] for c in read_jsonl(LOGS / "calls.jsonl")
-                         if c["purpose"] == "relato" and not c["error"]})
+                         if c["purpose"] == "relato" and not c["error"]
+                         and c["model_requested"] == cfg["relato"]["model"]})
     price = cfg["prices"]
     ps, pg = price[cfg["synthesis"]["model"]], price[cfg["relato"]["model"]]
 

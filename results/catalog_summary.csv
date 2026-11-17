@@ -11,3 +11,15 @@ eligible_A,28
 eligible_S,129
 eligible_E,100
 eligible_C,166
+occupations,923
+occupations_split,489
+occupations_split_pct,52.979
+chunks_mean,1.5417118093174431
+chunks_max,3
+statements_over_limit,0
+device,cpu
+main_va_texts_over_limit,0
+main_vb_texts_over_limit,0
+sens_va_texts_over_limit,0
+sens_vb_texts_over_limit,0
+b2_zero_variance_occupations,0

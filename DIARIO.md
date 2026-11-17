@@ -100,3 +100,38 @@ Horários no fuso de Brasília (UTC−3).
 ### Travamento
 - `models_access_date` = 16/11/2026 no `config.yaml`. Commit com código, prompts, configuração, `AJUSTES.md`,
   `DESVIOS.md`, este diário e os dados do desenvolvimento; tag `lock-v1` (hash registrado abaixo).
+- Hash da tag `lock-v1`: `e2d8076dc7e3c5d72492fddc0669bcc82d46bd4b`.
+
+### Avaliação (depois de `lock-v1`, ainda em 16/11/2026)
+- O Aderson decidiu executar a avaliação no mesmo dia, em vez de 17–18/11, e reforçou o saldo da Anthropic
+  em mais US$ 5 (total de US$ 30).
+- **Sorteio (`seed_eval = 20261117`):** 198 ocupações. Como previsto em D1, o tipo A entrou com as 23
+  restantes; as 10 vagas que faltavam foram sorteadas de modo uniforme entre as elegíveis restantes dos
+  demais tipos: 47-4099.03, 17-2171.00, 51-9161.00, 49-9051.00 e 47-5012.00 (R); 23-1021.00 e 13-2022.00
+  (C); 11-3111.00 e 27-3031.00 (E); 29-2011.02 (I).
+- **Relatos (Gemini):** 198 relatos; 2 substituições por três falhas no filtro de título — P098
+  (31-2021.00 → 25-3021.00, palavra "physical") e P105 (25-2059.01 → 25-2022.00, palavra "physical").
+  As duas substitutas são do mesmo tipo das descartadas.
+- **Composição final por tipo:** R 38, I 34, A 23, S 33, E 35, C 35.
+- **Ruído:** `scores_main.csv` (σ = 1,0, semente 20261120) e `scores_sens.csv` (σ = 0,5, semente 20261121).
+- **Gabarito (`gold.csv`), construído antes de executar os sistemas:** 5 relacionadas no catálogo em todos
+  os 198 perfis.
+- **Correção no relatório depois do travamento (desvio D4):** o `report.py` passou a ignorar as chamadas de
+  relato feitas ao Sonnet na troca desfeita, que continuam no log. Não afeta listas, métricas nem tempos.
+- **Execução dos cinco sistemas** nas duas condições: 396 sínteses e 3.960 reordenações com o
+  `claude-sonnet-5` (o ID devolvido pela API foi sempre esse). Nenhum texto de perfil passou de 384 tokens.
+  Reordenação: σ = 1,0 sem reenvios nem fallbacks; σ = 0,5 com 3 reenvios e 2 fallbacks em 1.980 execuções.
+  Sínteses: todas entre 99 e 120 palavras, exceto uma de 121 palavras na condição σ = 0,5.
+- **Resultados (σ = 1,0, n = 198), nDCG@5 médio:** B1 0,120 · B2 0,157 · V-A 0,231 · V-B 0,198 · V-C 0,384.
+- **Comparações (Wilcoxon bilateral, Bonferroni, critério: média de d ≥ 0,05 e p < 0,0125):**
+  - (a) H1, V-B − V-A: média −0,033, p = 0,147 → **não favorece** (a síntese não melhorou a recuperação).
+  - (b) H2, V-C − V-B: média +0,187, p = 2,1 × 10⁻¹⁸ → favorece V-C.
+  - (c) H3, V-C − B1: média +0,264, p = 1,6 × 10⁻¹⁷ → favorece V-C.
+  - (d) H4, V-C − B2: média +0,227, p = 1,7 × 10⁻¹⁵ → favorece V-C.
+- **Sensibilidade (σ = 0,5), nDCG@5 médio:** B1 0,120 · B2 0,360 · V-A 0,234 · V-B 0,207 · V-C 0,384. Só o B2
+  muda de forma relevante (+0,203), como esperado, por depender apenas das notas.
+- **Tempo médio por consulta (σ = 1,0):** B1 0,016 s · B2 0,001 s · V-A 0,40 s · V-B 4,28 s · V-C 5,50 s.
+- **Custo:** motor na avaliação US$ 19,36 (V-B US$ 0,0035 e V-C US$ 0,0080 por consulta); construção do
+  conjunto de avaliação (relatos do Gemini) US$ 1,57.
+- **Pacote de resultados** em `results/` (`RESULTADOS.md`, CSVs e `prompts_travados/`); commit com a tag
+  `results-v1`.

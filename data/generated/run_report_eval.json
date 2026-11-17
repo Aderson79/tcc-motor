@@ -1,0 +1,17 @@
+{
+  "b2_zero_variance_occupations": 0,
+  "main": {
+    "va_texts_over_limit": 0,
+    "vb_texts_over_limit": 0,
+    "vc_runs": 1980,
+    "vc_fallbacks": 0,
+    "vc_resends": 0
+  },
+  "sens": {
+    "va_texts_over_limit": 0,
+    "vb_texts_over_limit": 0,
+    "vc_runs": 1980,
+    "vc_fallbacks": 2,
+    "vc_resends": 3
+  }
+}
