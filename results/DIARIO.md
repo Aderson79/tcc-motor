@@ -100,7 +100,7 @@ Horários no fuso de Brasília (UTC−3).
 ### Travamento
 - `models_access_date` = 16/11/2026 no `config.yaml`. Commit com código, prompts, configuração, `AJUSTES.md`,
   `DESVIOS.md`, este diário e os dados do desenvolvimento; tag `lock-v1` (hash registrado abaixo).
-- Hash da tag `lock-v1`: `e2d8076dc7e3c5d72492fddc0669bcc82d46bd4b`.
+- Hash da tag `lock-v1`: `e8aff242918b4fea435e481f04a4d4adb7799e8d`.
 
 ### Avaliação (depois de `lock-v1`, ainda em 16/11/2026)
 - O Aderson decidiu executar a avaliação no mesmo dia, em vez de 17–18/11, e reforçou o saldo da Anthropic
@@ -135,3 +135,29 @@ Horários no fuso de Brasília (UTC−3).
   conjunto de avaliação (relatos do Gemini) US$ 1,57.
 - **Pacote de resultados** em `results/` (`RESULTADOS.md`, CSVs e `prompts_travados/`); commit com a tag
   `results-v1`.
+- Hash da tag `results-v1`: `676d1872667035e61d9ec6a4aa15d7966f13bb16`.
+
+### Acertos de documentação depois de `results-v1` (16/11/2026)
+- `main` e as tags `lock-v1` e `results-v1` enviados ao GitHub (repositório público).
+- `DESVIOS.md`: situação do D1 atualizada (ciência do Aderson) e hash "depois" do D4 preenchido.
+- `results/RESULTADOS.md`: hash do `results-v1` gravado na seção 0 e os mesmos dois acertos na cópia do
+  `DESVIOS.md` da seção 8. Editado à mão, sem regerar o relatório; nenhum número mudou. Esses acertos estão
+  num commit posterior à tag `results-v1`, que continua apontando para `676d187`.
+
+### Reescrita das mensagens de commit (16/11/2026)
+- A pedido do Aderson, o histórico do Git foi reescrito para deixar as mensagens de commit mais
+  explicativas e a autoria uniforme. Mudou **apenas** o que identifica cada commit, não o conteúdo:
+  - mensagens reescritas e sem a linha automática de coautoria da ferramenta (Claude Code) usada no
+    desenvolvimento;
+  - os dois primeiros commits, feitos num ambiente remoto com identidade genérica (`tcc-motor@localhost`) e
+    assinatura que o GitHub mostrava como "Unverified", passaram a ter o Aderson como autor;
+  - os três commits de acerto de documentação posteriores a `results-v1` foram reunidos em um só;
+  - as datas de autoria e de commit foram preservadas nos quatro primeiros commits.
+- Os hashes dos commits mudaram, e as tags foram recriadas nos commits equivalentes:
+  - `lock-v1`: antes `e2d8076`, agora `e8aff242918b4fea435e481f04a4d4adb7799e8d`;
+  - `results-v1`: antes `7f54111`, agora `676d1872667035e61d9ec6a4aa15d7966f13bb16`.
+  Os hashes antigos não haviam sido repassados a ninguém. Este diário e os demais documentos citam os novos.
+- **Conferência de que o conteúdo não mudou:** o hash da árvore de arquivos depende só do conteúdo e é o
+  mesmo antes e depois da reescrita:
+  - `git rev-parse lock-v1^{tree}` → `76e6c2f1173533c9f8fd54d5cc8541d76974c4e5`;
+  - `git rev-parse results-v1^{tree}` → `aeca458cfb81432bd4585967d5fa35477b57284c`.

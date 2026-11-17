@@ -1,7 +1,7 @@
 # RESULTADOS — TCC perfis sintéticos
 
 ## 0. Identificação
-- Repositório: https://github.com/Aderson79/tcc-motor.git · commit lock-v1: e2d8076dc7e3c5d72492fddc0669bcc82d46bd4b · commit results-v1: o commit apontado pela tag `results-v1` (`git rev-parse results-v1`; pai: e2d8076dc7e3c5d72492fddc0669bcc82d46bd4b)
+- Repositório: https://github.com/Aderson79/tcc-motor.git · commit lock-v1: e8aff242918b4fea435e481f04a4d4adb7799e8d · commit results-v1: 676d1872667035e61d9ec6a4aa15d7966f13bb16
 - Data de execução: 2026-11-16
 - Modelos (ID devolvido pela API e data de acesso): síntese e reordenação: claude-sonnet-5 · relatos: gemini-3.8-flash · acesso em 2026-11-16
 - Embedding: all-mpnet-base-v2, revisão e8c3b32edf5434bc2275fc9bab85f82640a19130, sentence-transformers 6.3.0
@@ -140,7 +140,8 @@ dentro do intervalo). As versões da rodada 1 são as travadas em `lock-v1`.
 - **Consequência para substituições:** na avaliação não sobra nenhuma ocupação A para substituir um relato
   que falhe três vezes no filtro. Nesse caso a substituta é sorteada pela mesma regra (uniforme entre as
   elegíveis restantes dos demais tipos) e o caso é acrescentado aqui.
-- **Situação:** aguardando ciência do Aderson (ponto de parada da Seção 17).
+- **Situação:** o Aderson tomou ciência em 16/11/2026 e a regra foi aplicada no sorteio da avaliação
+  (23 perfis A; as 10 vagas restantes ficaram com R 5, C 2, E 2 e I 1).
 
 ## D2 — PostgreSQL com pgvector fora do Docker (16/11/2026)
 - **Fato:** a máquina de execução (Windows 10 Pro) não tem Docker nem WSL, e a instalação exigiria
@@ -177,7 +178,7 @@ dentro do intervalo). As versões da rodada 1 são as travadas em `lock-v1`.
   construção do conjunto de desenvolvimento somaria essas chamadas ao preço do Gemini.
 - **Correção:** o relatório passa a considerar só as chamadas de relato feitas ao modelo de relatos do
   `config.yaml`. Duas condições acrescentadas em `report.py`; nada mais mudou.
-- **Hash antes:** `e2d8076` (`lock-v1`). **Hash depois:** o do commit `results-v1`.
+- **Hash antes:** `e8aff24` (`lock-v1`). **Hash depois:** `676d187` (`results-v1`).
 - **Efeito:** nenhum sobre relatos, sínteses, listas, métricas, testes ou tempos. Corrige só a identificação
   do modelo e o custo de construção informados no relatório. Feita antes de o pacote ser gerado.
 

@@ -9,7 +9,8 @@
 - **Consequência para substituições:** na avaliação não sobra nenhuma ocupação A para substituir um relato
   que falhe três vezes no filtro. Nesse caso a substituta é sorteada pela mesma regra (uniforme entre as
   elegíveis restantes dos demais tipos) e o caso é acrescentado aqui.
-- **Situação:** aguardando ciência do Aderson (ponto de parada da Seção 17).
+- **Situação:** o Aderson tomou ciência em 16/11/2026 e a regra foi aplicada no sorteio da avaliação
+  (23 perfis A; as 10 vagas restantes ficaram com R 5, C 2, E 2 e I 1).
 
 ## D2 — PostgreSQL com pgvector fora do Docker (16/11/2026)
 - **Fato:** a máquina de execução (Windows 10 Pro) não tem Docker nem WSL, e a instalação exigiria
@@ -46,7 +47,7 @@
   construção do conjunto de desenvolvimento somaria essas chamadas ao preço do Gemini.
 - **Correção:** o relatório passa a considerar só as chamadas de relato feitas ao modelo de relatos do
   `config.yaml`. Duas condições acrescentadas em `report.py`; nada mais mudou.
-- **Hash antes:** `e2d8076` (`lock-v1`). **Hash depois:** o do commit `results-v1`.
+- **Hash antes:** `e8aff24` (`lock-v1`). **Hash depois:** `676d187` (`results-v1`).
 - **Efeito:** nenhum sobre relatos, sínteses, listas, métricas, testes ou tempos. Corrige só a identificação
   do modelo e o custo de construção informados no relatório. Feita antes de o pacote ser gerado.
 
