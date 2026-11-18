@@ -51,6 +51,18 @@
 - **Efeito:** nenhum sobre relatos, sínteses, listas, métricas, testes ou tempos. Corrige só a identificação
   do modelo e o custo de construção informados no relatório. Feita antes de o pacote ser gerado.
 
+## D5 — Conferência humana dos relatos feita depois da execução (registrado em 18/11/2026)
+- **Fato:** na orientação de 05/11/2026 combinou-se que, antes da execução, uma amostra de cerca de 50 relatos
+  seria conferida pelo Aderson e por uma segunda pessoa sem vínculo com a Career Angel. Essa conferência não
+  foi feita antes do `lock-v1` nem antes da execução da avaliação.
+- **O que foi feito:** depois de `results-v1`, a pedido do orientador (parecer de 18/11/2026), 50 dos 198
+  relatos da avaliação foram sorteados com a semente 20261123 (`analises/conferencia_relatos.py`) e julgados
+  de forma independente pelos dois avaliadores, sem ver a ocupação de origem nem as respostas do outro, em
+  duas perguntas: (1) parece relato de pessoa leiga? (2) dá para adivinhar a ocupação? Aceite = (1) Sim e
+  (2) Não. Resultado (aceite por avaliador e Kappa de Cohen) em `analises/conferencia/resultado_conferencia.csv`.
+- **Efeito:** nenhum sobre relatos, sínteses, listas, métricas ou testes. A conferência descreve o instrumento;
+  não foi usada para selecionar, trocar ou excluir relatos.
+
 ## Notas de interpretação (não alteram o protocolo; registradas por transparência)
 - **Raciocínio do Sonnet:** no `claude-sonnet-5`, omitir o parâmetro `thinking` ativa o raciocínio adaptativo
   por padrão; as chamadas enviam `thinking={"type": "disabled"}`.

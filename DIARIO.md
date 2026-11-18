@@ -183,3 +183,36 @@ comparações inferenciais nem no `RESULTADOS.md`.
   - palavras de conteúdo por texto (média): relatos 51,51, sínteses 74,15;
   - palavras de conteúdo distintas por texto (média): relatos 50,01, sínteses 71,60;
   - vocabulário distinto total: relatos 2.258, sínteses 1.830.
+
+### Conferência dos relatos, IC e tamanho de efeito, B2 sem ruído (18/11/2026)
+Pedidos do parecer do orientador de 18/11/2026. Os três scripts **não chamam nenhum modelo e não alteram dados
+nem resultados**.
+- **Scripts:**
+  - `analises/conferencia_relatos.py`: sorteia 50 dos 198 relatos da avaliação para a conferência humana
+    (semente 20261123) e gera as duas fichas em branco; sorteia 1 relato por tipo RIASEC para o apêndice
+    (semente 20261124); depois, com as fichas preenchidas, calcula o aceite e o Kappa de Cohen (ver D5).
+  - `analises/efeito_ic.py`: IC da média de d (t pareado, 95% e 98,75%), IC de bootstrap percentil (10.000
+    reamostragens, semente 20261125), correlação bisserial de postos pareada (r_rb) e d_z de Cohen, para as
+    quatro comparações; lê `results/per_profile_metrics.csv`.
+  - `analises/b2_sem_ruido.py`: roda o B2 de `src/tcc/systems/b2.py` com as notas OI exatas da ocupação de
+    origem (sem sorteio); antes, confere que reproduz o nDCG@5 publicado de B2 com σ = 1,0 e σ = 0,5.
+- **Ambiente:** rodado em outra máquina Windows 11, sem o `.venvs\tcc-motor`: ambiente temporário com Python
+  3.14.7 e as versões travadas de numpy 2.5.5, pandas 3.1.1, scipy 1.18.1, PyYAML 6.0.3 e scikit-learn 1.9.1.
+  O O*NET 31.0 foi baixado de novo e o SHA-256 do zip conferiu com o do `config.yaml` (`55033fc6…`).
+- **Conferência:** `amostra_50.csv`, `exemplos_por_tipo.csv` e as duas fichas `.csv` reproduziram o SHA-256 dos
+  arquivos do pacote. Amostra: R 12, I 3, A 9, S 5, E 11, C 10. Exemplos: P009 (R), P066 (I), P070 (A),
+  P121 (S), P141 (E), P160 (C).
+- **Tamanho de efeito (nDCG@5, condição principal):**
+  - H1 (V-B − V-A): média −0,033; IC95% [−0,073; +0,007]; IC98,75% [−0,084; +0,018]; r_rb −0,143;
+    d_z −0,117. Limite superior do IC95% +0,0065 e do IC98,75% +0,0176, ambos abaixo do limiar de 0,05.
+  - H2 (V-C − V-B): média +0,187; IC95% [+0,153; +0,220]; r_rb +0,850; d_z +0,771.
+  - H3 (V-C − B1): média +0,264; IC95% [+0,215; +0,313]; r_rb +0,772; d_z +0,756.
+  - H4 (V-C − B2): média +0,227; IC95% [+0,180; +0,273]; r_rb +0,712; d_z +0,680.
+  - Na sensibilidade (σ = 0,5), H4 cai para média +0,024, IC95% [−0,024; +0,073], r_rb +0,105.
+  - `efeito_ic.py` arredonda as diferenças a 12 casas antes de calcular os postos do r_rb, porque 16 pares de
+    |d| que deveriam empatar diferiam só no último bit e recebiam postos diferentes conforme a máquina; com
+    isso, os r_rb mudaram na 4ª casa (ex.: sensibilidade H1 de −0,109 para −0,108), sem efeito sobre os
+    valores com duas casas do TCC; IC e bootstrap não mudaram.
+- **B2 sem ruído (198 perfis):** nDCG@5 média 0,617 (DP 0,121; mediana 0,616); P@5 0,378; MAP@5 0,335;
+  MRR@5 de origem 1,000; origem na 1ª posição nos 198 perfis; nenhum perfil com outra ocupação de correlação 1
+  com a origem; nenhum perfil sem ocupação relevante nas 5.

@@ -1,0 +1,7 @@
+B2 sem ruído (notas OI exatas da ocupação de origem), 198 perfis da avaliação
+nDCG@5 média 0.617 (DP 0.121; mediana 0.616)
+P@5 0.378 · MAP@5 0.335 · MRR@5 de origem 1.000
+origem na 1ª posição: 198 perfis; fora das 5 primeiras: 0
+perfis em que outra ocupação tem correlação 1 com a origem: 0
+perfis sem nenhuma ocupação relevante nas 5: 0
+Conferência: o mesmo código reproduz o nDCG@5 publicado de B2 com σ = 1,0 e σ = 0,5.
