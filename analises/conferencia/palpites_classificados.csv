@@ -1,0 +1,53 @@
+avaliador,item,code,titulo_onet,adivinha,palpite,classificacao
+avaliador1,R01,39-9041.00,Residential Advisors,Não,Professor,outra ocupação
+avaliador1,R03,27-1025.00,Interior Designers,Sim,Arquiteto,outra ocupação
+avaliador1,R05,43-4051.00,Customer Service Representatives,Não,Psicologo,outra ocupação
+avaliador1,R08,51-2022.00,Electrical and Electronic Equipment Assemblers,Não,Mecanico,outra ocupação
+avaliador1,R10,11-3031.01,Treasurers and Controllers,Sim,Contador,mesma área
+avaliador1,R13,43-2011.00,"Switchboard Operators, Including Answering Service",Sim,Secretaria,outra ocupação
+avaliador1,R18,27-1022.00,Fashion Designers,Sim,Estilista,mesma ocupação
+avaliador1,R24,29-1223.00,Psychiatrists,Sim,Psiquiatra,mesma ocupação
+avaliador1,R37,15-1255.00,Web and Digital Interface Designers,Sim,Frontend Developer,mesma área
+avaliador1,R43,27-2031.00,Dancers,Sim,Personal Trainer,outra ocupação
+avaliador1,R45,27-2041.00,Music Directors and Composers,Sim,Maestro,mesma ocupação
+avaliador1,R49,35-2014.00,"Cooks, Restaurant",Sim,Chef de cozinha,mesma área
+avaliador2,R01,39-9041.00,Residential Advisors,Não,monitor de residência estudantil,mesma ocupação
+avaliador2,R02,27-4031.00,"Camera Operators, Television, Video, and Film",Sim,cinegrafista,mesma ocupação
+avaliador2,R03,27-1025.00,Interior Designers,Sim,designer de interiores,mesma ocupação
+avaliador2,R04,13-1111.00,Management Analysts,Não,analista de processos,outra ocupação
+avaliador2,R07,49-9061.00,Camera and Photographic Equipment Repairers,Sim,relojoeiro,outra ocupação
+avaliador2,R08,51-2022.00,Electrical and Electronic Equipment Assemblers,Não,montador de eletrônicos,mesma ocupação
+avaliador2,R09,29-2035.00,Magnetic Resonance Imaging Technologists,Sim,técnico em radiologia,mesma área
+avaliador2,R10,11-3031.01,Treasurers and Controllers,Não,gerente financeiro,mesma área
+avaliador2,R11,31-9095.00,Pharmacy Aides,Sim,atendente de farmácia,mesma ocupação
+avaliador2,R12,41-9012.00,Models,Sim,modelo,mesma ocupação
+avaliador2,R13,43-2011.00,"Switchboard Operators, Including Answering Service",Sim,recepcionista,outra ocupação
+avaliador2,R14,53-1042.00,"First-Line Supervisors of Helpers, Laborers, and Material Movers, Hand",Não,obreiro,outra ocupação
+avaliador2,R15,15-1221.00,Computer and Information Research Scientists,Não,gerente de TI,outra ocupação
+avaliador2,R16,27-2032.00,Choreographers,Sim,coreografia,mesma ocupação
+avaliador2,R17,19-3033.00,Clinical and Counseling Psychologists,Sim,psicólogo,mesma ocupação
+avaliador2,R18,27-1022.00,Fashion Designers,Sim,estilista,mesma ocupação
+avaliador2,R20,43-5031.00,Public Safety Telecommunicators,Sim,atendente de emergência,mesma ocupação
+avaliador2,R21,41-3041.00,Travel Agents,Sim,agente de viagens,mesma ocupação
+avaliador2,R22,15-1231.00,Computer Network Support Specialists,Sim,administrador de redes,mesma área
+avaliador2,R23,37-1011.00,First-Line Supervisors of Housekeeping and Janitorial Workers,Sim,supervisor de limpeza,mesma ocupação
+avaliador2,R24,29-1223.00,Psychiatrists,Sim,psiquiatra,mesma ocupação
+avaliador2,R25,11-3131.00,Training and Development Managers,Sim,analista de treinamento,mesma área
+avaliador2,R28,33-3031.00,Fish and Game Wardens,Sim,guarda florestal,mesma área
+avaliador2,R31,27-3043.05,"Poets, Lyricists and Creative Writers",Sim,escritor,mesma ocupação
+avaliador2,R32,17-2171.00,Petroleum Engineers,Não,engenheiro de petróleo,mesma ocupação
+avaliador2,R33,27-1011.00,Art Directors,Sim,diretor de arte,mesma ocupação
+avaliador2,R35,11-9131.00,Postmasters and Mail Superintendents,Não,gerente de loja,outra ocupação
+avaliador2,R36,25-9021.00,Farm and Home Management Educators,Não,técnico agrícola,outra ocupação
+avaliador2,R37,15-1255.00,Web and Digital Interface Designers,Sim,desenvolvedor web,mesma área
+avaliador2,R40,43-1011.00,First-Line Supervisors of Office and Administrative Support Workers,Não,supervisor,mesma área
+avaliador2,R41,51-4031.00,"Cutting, Punching, and Press Machine Setters, Operators, and Tenders, Metal and Plastic",Não,operador de máquinas,mesma área
+avaliador2,R42,47-3011.00,"Helpers--Brickmasons, Blockmasons, Stonemasons, and Tile and Marble Setters",Sim,ajudante de pedreiro,mesma ocupação
+avaliador2,R43,27-2031.00,Dancers,Sim,bailarino,mesma ocupação
+avaliador2,R44,35-1011.00,Chefs and Head Cooks,Sim,chef de cozinha,mesma ocupação
+avaliador2,R45,27-2041.00,Music Directors and Composers,Sim,maestro,mesma ocupação
+avaliador2,R46,47-2061.00,Construction Laborers,Sim,operário da construção civil,mesma ocupação
+avaliador2,R47,11-3111.00,Compensation and Benefits Managers,Sim,analista de RH,outra ocupação
+avaliador2,R48,47-3014.00,"Helpers--Painters, Paperhangers, Plasterers, and Stucco Masons",Sim,ajudante de pintor,mesma ocupação
+avaliador2,R49,35-2014.00,"Cooks, Restaurant",Sim,cozinheiro,mesma ocupação
+avaliador2,R50,29-9099.01,Midwives,Sim,parteira,mesma ocupação

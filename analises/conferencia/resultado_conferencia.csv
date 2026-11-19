@@ -1,0 +1,4 @@
+pergunta,sim_avaliador1,sim_avaliador2,sim_nos_dois,concordancia,kappa
+"Parece relato escrito por uma pessoa leiga, em linguagem cotidiana?",72.0%,90.0%,64.0%,66.0%,-0.049
+Dá para adivinhar a ocupação específica a partir do relato?,18.0%,68.0%,16.0%,46.0%,0.122
+Aceite (leigo = Sim e adivinha = Não),64.0%,24.0%,20.0%,52.0%,0.162

@@ -216,3 +216,32 @@ nem resultados**.
 - **B2 sem ruído (198 perfis):** nDCG@5 média 0,617 (DP 0,121; mediana 0,616); P@5 0,378; MAP@5 0,335;
   MRR@5 de origem 1,000; origem na 1ª posição nos 198 perfis; nenhum perfil com outra ocupação de correlação 1
   com a origem; nenhum perfil sem ocupação relevante nas 5.
+
+### Resultado da conferência humana dos relatos, D5 (19/11/2026)
+Não chama nenhum modelo e não altera dados nem resultados. Comando: `python analises/conferencia_relatos.py kappa`
+(ambiente temporário com as mesmas versões travadas de 18/11); saída em `analises/conferencia/resultado_conferencia.csv`.
+- **Fichas:** voltaram em PDF e em CSV do Excel (Windows-1252, separador `;`). Foram transcritas para UTF-8 nas
+  colunas da ficha (`ficha_avaliador1_preenchida.csv` e `ficha_avaliador2_preenchida.csv`), sem alterar nenhuma
+  resposta. Os originais estão em `analises/conferencia/originais/`. A transcrição foi conferida contra os CSV
+  originais (colunas `leigo`, `adivinha` e palpite), e o texto dos relatos, contra as fichas em branco.
+- **Exceção na transcrição:** na ficha do avaliador 1 (Aderson), o item R02 tinha a coluna "adivinha" em branco.
+  Em 19/11/2026, o Aderson informou que a resposta é "Não", e esse valor foi registrado na transcrição. No R02 ele
+  respondeu "leigo = Não", então o aceite desse item não depende dessa resposta.
+- **Resultado (50 relatos):**
+
+  | pergunta | sim_avaliador1 | sim_avaliador2 | sim_nos_dois | concordancia | kappa |
+  |---|---|---|---|---|---|
+  | Parece relato escrito por uma pessoa leiga…? | 72.0% | 90.0% | 64.0% | 66.0% | −0.049 |
+  | Dá para adivinhar a ocupação específica…? | 18.0% | 68.0% | 16.0% | 46.0% | 0.122 |
+  | Aceite (leigo = Sim e adivinha = Não) | 64.0% | 24.0% | 20.0% | 52.0% | 0.162 |
+
+- **Palpites:**
+  - O avaliador 2 deu 40 palpites: 24 da mesma ocupação de origem, 8 da mesma área e 8 de outra ocupação.
+  - O avaliador 1 deu 12 palpites: 3 da mesma ocupação, 3 da mesma área e 6 de outra.
+  - A classificação foi feita pelo Aderson contra os títulos do O*NET 31.0 (`palpites_classificados.csv`). R04
+    ("analista de processos", Management Analysts) e R47 ("analista de RH", Compensation and Benefits Managers)
+    foram classificados como "outra ocupação" por decisão do Aderson.
+- **Leitura:** a concordância entre os avaliadores é leve (Kappa do aceite 0,16). O avaliador 2, sem conhecimento
+  do experimento, chegou à ocupação de origem em quase metade da amostra. Por isso os relatos tendem a revelar a
+  ocupação, e os valores absolutos dos sistemas que leem o relato tendem a ser otimistas, como registrado no TCC
+  (Seções 3.11 e 4.1).
